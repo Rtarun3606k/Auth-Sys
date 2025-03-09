@@ -24,5 +24,14 @@ user.create_index([('user_id', ASCENDING)], unique=True)
 admin.create_index([('email', ASCENDING)], unique=True)
 admin.create_index([('employee_id', ASCENDING)], unique=True)
 
-application.create_index([('appKey1', ASCENDING)], unique=True)
+# application.drop_index("appKey1")
+
+# Create a partial index
+# application.create_index(
+#     [("appKey1", ASCENDING)],
+#     unique=True,
+#     partialFilterExpression={"appKey1": {"$exists": True, "$ne": None}}
+# )
 application.create_index([('appKey2', ASCENDING)], unique=True)
+application.create_index([('appKey1', ASCENDING)], unique=True)
+# application.create_index([('appname', ASCENDING)], unique=True)
