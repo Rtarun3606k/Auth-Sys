@@ -3,6 +3,7 @@ from config import DeveloperConsole
 import bcrypt
 import datetime
 from utilities.JWTManagement import create_jwt, verify_jwt
+from pymongo.errors import DuplicateKeyError
 import logging
 
 # Configure logging
@@ -59,6 +60,10 @@ def register():
             return jsonify({'msg': 'User registration failed'}), 400
         
         return jsonify({'msg': 'User registered successfully'}), 200
+    except DuplicateKeyError as e:
+        logger.error(f"User registration failed: {e}")
+        return jsonify({'msg': 'User registration failed', 'error': 'Email or Employee ID already exists'}), 400
     except Exception as e:
+        
         logger.error(f"User registration failed: {e}")
         return jsonify({'msg': 'User registration failed', 'error': str(e)}), 400

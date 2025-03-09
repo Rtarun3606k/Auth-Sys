@@ -30,3 +30,18 @@ def verify_jwt(token: str) -> dict:
         raise Exception("Token has expired")
     except jwt.InvalidTokenError:
         raise Exception("Invalid token")
+    
+
+def middleWare(authToken: str):
+    """
+    Middleware to verify the JWT token.
+    
+    :param authToken: The JWT token.
+    :return: The decoded payload.
+    :raises: jwt.ExpiredSignatureError, jwt.InvalidTokenError
+    """
+    try:
+        payload = verify_jwt(authToken)
+        return payload
+    except Exception as e:
+        raise Exception(str(e))
