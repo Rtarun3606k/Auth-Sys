@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from config import DeveloperConsole,Application
 from utilities.JWTManagement import create_jwt, verify_jwt, middleWare
-from utilities.searilization import serialize_doc
+from utilities.searilization import serialize_doc,generate_api_key
 from pymongo.errors import DuplicateKeyError
 
 devRoutes = Blueprint('devRoutes', __name__)
@@ -122,6 +122,19 @@ def createApp():
         if not app_data:
             return jsonify({'msg': 'App data missing'}), 400
         
+        if not app_data.get('appname') or not app_data.get('redirectionURL') or not app_data.get('errorURL'):
+            return jsonify({'msg': 'App data incomplete'}), 400
+        
+
+        apiKey1 = generate_api_key(app_data['appname'])
+        apiKey2 = generate_api_key(str(app_data['appname']+'1'))
+
+        print(apiKey1,apiKey2)
+
+        app_data['apiKey1'] = apiKey1 
+        app_data['apiKey2'] = apiKey2
+        
+        print(app_data)
         # Find the developer document
         developer = DeveloperConsole.find_one({'email': payload['email']})
         if not developer:
@@ -146,6 +159,7 @@ def createApp():
         return jsonify({'msg': 'App created successfully', 'app_id': str(app_id)}), 200
     
     except DuplicateKeyError as e:
+        print(e)
         return jsonify({'msg': 'App creation failed', 'error': 'App already exists'}), 400
 
     except Exception as e:
