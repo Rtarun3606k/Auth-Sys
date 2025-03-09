@@ -123,12 +123,13 @@ def createApp():
         if not app_data:
             return jsonify({'msg': 'App data missing'}), 400
         
-        if not app_data.get('appname') or not app_data.get('redirectionURL') or not app_data.get('errorURL'):
+        if not app_data.get('appname') or not app_data.get('redirectionURL') or not app_data.get('errorURL') or not app_data.get('cookiesName'):
             return jsonify({'msg': 'App data incomplete'}), 400
         
         # Generate unique API keys
         api_keys = generate_api_keys(app_data['appname'])
         app_data.update(api_keys)
+        
         
         # Find the developer document
         print(app_data)
