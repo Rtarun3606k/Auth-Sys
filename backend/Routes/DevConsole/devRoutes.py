@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify
-from config import DeveloperConsole
+from config import DeveloperConsole,Application
 from utilities.JWTManagement import create_jwt, verify_jwt, middleWare
 from utilities.searilization import serialize_doc
+from pymongo.errors import DuplicateKeyError
 
 devRoutes = Blueprint('devRoutes', __name__)
 
@@ -101,6 +102,7 @@ def getAllDevs():
         return jsonify({'msg': 'Error', 'error': str(e)}),401
     
 
+
 @devRoutes.route('/createApp', methods=['POST'])
 def createApp():
     try:
@@ -120,15 +122,32 @@ def createApp():
         if not app_data:
             return jsonify({'msg': 'App data missing'}), 400
         
-        # Ensure 'apps' field is an array and push the new app data
+        # Find the developer document
+        developer = DeveloperConsole.find_one({'email': payload['email']})
+        if not developer:
+            return jsonify({'msg': 'Developer not found'}), 404
+        
+        # Add developer's _id to the app data
+        app_data['developer_id'] = developer['_id']
+        
+        # Insert the new app data into the Application collection
+        app_result = Application.insert_one(app_data)
+        app_id = app_result.inserted_id
+        
+        # Ensure 'apps' field is an array and push the new app ID
         update_result = DeveloperConsole.update_one(
             {'email': payload['email']},
-            {'$push': {'apps': app_data}}
+            {'$push': {'apps': app_id}}
         )
         
         if update_result.modified_count == 0:
             return jsonify({'msg': 'App creation failed'}), 400
         
-        return jsonify({'msg': 'App created successfully'}), 200
+        return jsonify({'msg': 'App created successfully', 'app_id': str(app_id)}), 200
+    
+    except DuplicateKeyError as e:
+        return jsonify({'msg': 'App creation failed', 'error': 'App already exists'}), 400
+
     except Exception as e:
+        # logger.error(f"Error in createApp: {e}")
         return jsonify({'msg': 'Error', 'error': str(e)}), 400

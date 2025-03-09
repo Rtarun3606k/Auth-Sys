@@ -1,7 +1,7 @@
 from flask import Flask 
 from flask_cors import CORS
 
-from DataBase.dataBase import db,developerConsole,user,admin
+from DataBase.dataBase import db,developerConsole,user,admin,application
 
 
 # load env
@@ -15,6 +15,7 @@ load_dotenv()
 DeveloperConsole = developerConsole
 User = user
 Admin = admin
+Application = application
 
 
 
