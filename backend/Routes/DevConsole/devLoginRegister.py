@@ -53,7 +53,8 @@ def register():
             'email': data['email'],
             'employee_id': data['employee_id'],
             # 'id_card': data['id_card'],
-            'role': 'developer'
+            'role': 'developer',
+            
         })
         
         if not registerDev:

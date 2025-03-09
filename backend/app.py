@@ -9,7 +9,8 @@ from config import app
 
 # import all blueprints
 
-from Routes.loginRoutes import loginRegister
+from Routes.userConsole.userRoutes import userRoutes
+from Routes.userConsole.loginRoutes import loginRegister
 
 from Routes.DevConsole.devLoginRegister import  devLoginRegister
 from Routes.DevConsole.devRoutes import  devRoutes

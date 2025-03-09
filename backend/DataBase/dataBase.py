@@ -32,6 +32,6 @@ admin.create_index([('employee_id', ASCENDING)], unique=True)
 #     unique=True,
 #     partialFilterExpression={"appKey1": {"$exists": True, "$ne": None}}
 # )
-application.create_index([('appKey2', ASCENDING)], unique=True)
-application.create_index([('appKey1', ASCENDING)], unique=True)
+# application.create_index([('appKey2', ASCENDING)], unique=True)
+# application.create_index([('appKey1', ASCENDING)], unique=True)
 # application.create_index([('appname', ASCENDING)], unique=True)
