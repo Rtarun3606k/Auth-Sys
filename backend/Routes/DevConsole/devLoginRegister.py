@@ -40,6 +40,7 @@ def register():
         'email': data['email'],
         'employee_id': data['employee_id'],
         # 'id_card': data['id_card'],
+        'role': 'developer'
     })
     
     return jsonify({'msg': 'User registered successfully'})
