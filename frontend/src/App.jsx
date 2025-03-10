@@ -1,22 +1,28 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import Home from "./Pages/views/Home"
-import Login from "./Pages/auth/Login"
-import Register from "./Pages/auth/register"
-import "./App.css"
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Home from "./Pages/views/Home";
+import Login from "./Pages/auth/Login";
+import React from "react";
+import Register from "./Pages/auth/Register";
+import "./App.css";
 
 function App() {
   // Check if user is authenticated
   const isAuthenticated = () => {
-    return localStorage.getItem("currentUser") !== null
-  }
+    return localStorage.getItem("currentUser") !== null;
+  };
 
   // Protected route component
   const ProtectedRoute = ({ children }) => {
     if (!isAuthenticated()) {
-      return <Navigate to="/login" />
+      return <Navigate to="/login" />;
     }
-    return children
-  }
+    return children;
+  };
 
   return (
     <Router>
@@ -28,8 +34,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
-
+export default App;

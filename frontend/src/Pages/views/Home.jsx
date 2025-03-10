@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom"
-import Navbar from "../../components/Navbar"
-import Footer from "../../components/Footer"
-
+import { Link } from "react-router-dom";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import React from "react";
 const Home = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -17,12 +17,18 @@ const Home = () => {
             />
           </div>
 
-          <h1 className="text-3xl font-bold text-center text-[#2e3a6a] mb-2">Welcome to PES University</h1>
-          <h2 className="text-xl text-center text-gray-600 mb-8">Student Registration Portal</h2>
+          <h1 className="text-3xl font-bold text-center text-[#2e3a6a] mb-2">
+            Welcome to PES University
+          </h1>
+          <h2 className="text-xl text-center text-gray-600 mb-8">
+            Student Registration Portal
+          </h2>
 
           <div className="border-t border-gray-200 my-6"></div>
 
-          <p className="text-center text-gray-600 mb-6">Please register or login to access your student account.</p>
+          <p className="text-center text-gray-600 mb-6">
+            Please register or login to access your student account.
+          </p>
 
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
             <Link
@@ -43,8 +49,7 @@ const Home = () => {
 
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Home
-
+export default Home;

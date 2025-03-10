@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import React from "react";
 
 const Navbar = () => {
   return (
@@ -12,16 +13,24 @@ const Navbar = () => {
                 alt="PES University Logo"
                 className="h-8 w-auto"
               />
-              <span className="ml-3 text-[#2e3a6a] font-semibold text-lg">Student Portal</span>
+              <span className="ml-3 text-[#2e3a6a] font-semibold text-lg">
+                Student Portal
+              </span>
             </Link>
             <div className="ml-6">
-              <Link to="/" className="text-[#2e3a6a] hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium">
+              <Link
+                to="/"
+                className="text-[#2e3a6a] hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium"
+              >
                 Home
               </Link>
             </div>
           </div>
           <div className="flex items-center">
-            <Link to="/login" className="text-[#2e3a6a] hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium">
+            <Link
+              to="/login"
+              className="text-[#2e3a6a] hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium"
+            >
               Login
             </Link>
             <Link
@@ -34,8 +43,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
-
+export default Navbar;

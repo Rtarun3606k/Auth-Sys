@@ -1,56 +1,59 @@
-"use client"
-
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import Navbar from "../../components/Navbar"
-import Footer from "../../components/Footer"
-
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import React from "react";
 const Register = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
-  })
-  const [error, setError] = useState("")
+  });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setError("")
+    e.preventDefault();
+    setError("");
 
     // Basic validation
-    if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword) {
-      setError("All fields are required")
-      return
+    if (
+      !formData.username ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      setError("All fields are required");
+      return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match")
-      return
+      setError("Passwords do not match");
+      return;
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters")
-      return
+      setError("Password must be at least 6 characters");
+      return;
     }
 
     // Store user data in local storage
-    const users = JSON.parse(localStorage.getItem("users") || "[]")
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
 
     // Check if email already exists
-    const emailExists = users.some((user) => user.email === formData.email)
+    const emailExists = users.some((user) => user.email === formData.email);
     if (emailExists) {
-      setError("Email already registered")
-      return
+      setError("Email already registered");
+      return;
     }
 
     // Add new user
@@ -59,9 +62,9 @@ const Register = () => {
       username: formData.username,
       email: formData.email,
       password: formData.password, // In a real app, you should hash this password
-    })
+    });
 
-    localStorage.setItem("users", JSON.stringify(users))
+    localStorage.setItem("users", JSON.stringify(users));
 
     // Set current user
     localStorage.setItem(
@@ -70,12 +73,12 @@ const Register = () => {
         id: users[users.length - 1].id,
         username: formData.username,
         email: formData.email,
-      }),
-    )
+      })
+    );
 
     // Redirect to home page
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -83,10 +86,15 @@ const Register = () => {
 
       <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold text-[#2e3a6a] mb-6">Join Today</h2>
+          <h2 className="text-2xl font-bold text-[#2e3a6a] mb-6 text-center">
+            Join Today
+          </h2>
 
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+              role="alert"
+            >
               <span className="block sm:inline">{error}</span>
             </div>
           )}
@@ -135,7 +143,10 @@ const Register = () => {
             </div>
 
             <div className="mb-6">
-              <label htmlFor="confirmPassword" className="block text-gray-700 mb-2">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-gray-700 mb-2"
+              >
                 Confirm Password
               </label>
               <input
@@ -148,18 +159,23 @@ const Register = () => {
               />
             </div>
 
-            <button
-              type="submit"
-              className="bg-[#2e3a6a] text-white py-2 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              Sign Up
-            </button>
+            <center>
+              <button
+                type="submit"
+                className="bg-[#2e3a6a] text-white py-2 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Sign Up
+              </button>
+            </center>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               Already Have An Account?{" "}
-              <Link to="/login" className="text-blue-600 hover:text-blue-800 font-medium">
+              <Link
+                to="/login"
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
                 Sign In
               </Link>
             </p>
@@ -169,8 +185,7 @@ const Register = () => {
 
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Register
-
+export default Register;

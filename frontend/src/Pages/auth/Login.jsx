@@ -1,43 +1,44 @@
-"use client"
-
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import Navbar from "../../components/Navbar"
-import Footer from "../../components/Footer"
-
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import React from "react";
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  })
-  const [error, setError] = useState("")
+  });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setError("")
+    e.preventDefault();
+    setError("");
 
     // Basic validation
     if (!formData.email || !formData.password) {
-      setError("All fields are required")
-      return
+      setError("All fields are required");
+      return;
     }
 
     // Check if user exists in local storage
-    const users = JSON.parse(localStorage.getItem("users") || "[]")
-    const user = users.find((user) => user.email === formData.email && user.password === formData.password)
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find(
+      (user) =>
+        user.email === formData.email && user.password === formData.password
+    );
 
     if (!user) {
-      setError("Invalid email or password")
-      return
+      setError("Invalid email or password");
+      return;
     }
 
     // Set current user
@@ -47,12 +48,12 @@ const Login = () => {
         id: user.id,
         username: user.username,
         email: user.email,
-      }),
-    )
+      })
+    );
 
     // Redirect to home page
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -60,10 +61,15 @@ const Login = () => {
 
       <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold text-[#2e3a6a] mb-6">Sign In</h2>
+          <h2 className="text-2xl font-bold text-[#2e3a6a] mb-6 text-center">
+            Sign In
+          </h2>
 
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+              role="alert"
+            >
               <span className="block sm:inline">{error}</span>
             </div>
           )}
@@ -97,18 +103,23 @@ const Login = () => {
               />
             </div>
 
-            <button
-              type="submit"
-              className="bg-[#2e3a6a] text-white py-2 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              Sign In
-            </button>
+            <center>
+              <button
+                type="submit"
+                className="text-center bg-[#2e3a6a] text-white py-2 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Sign In
+              </button>
+            </center>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               Don't have an account?{" "}
-              <Link to="/register" className="text-blue-600 hover:text-blue-800 font-medium">
+              <Link
+                to="/register"
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
                 Register Now
               </Link>
             </p>
@@ -118,8 +129,7 @@ const Login = () => {
 
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Login
-
+export default Login;
