@@ -36,13 +36,13 @@ def get_user():
         user = User.find_one({'email': payload['email']})
         if user:
             user['_id'] = str(user['_id'])
-            return jsonify(user), 200
+            return jsonify({'userData':user}), 200
         return jsonify({'msg': 'User not found'}), 404
     except Exception as e:
         logger.error(f"Fetching user failed: {e}")
         return jsonify({'msg': 'Fetching user failed', 'error': str(e)}), 400
 
-@userRoutes.route('/user', methods=['PUT'])
+@userRoutes.route('/user-update', methods=['PUT'])
 def update_user():
     data = request.get_json()
     try:
@@ -62,7 +62,7 @@ def update_user():
         logger.error(f"Updating user failed: {e}")
         return jsonify({'msg': 'Updating user failed', 'error': str(e)}), 400
 
-@userRoutes.route('/user', methods=['DELETE'])
+@userRoutes.route('/user-delete', methods=['DELETE'])
 def delete_user():
     try:
         authToken = request.headers.get('Authorization')
