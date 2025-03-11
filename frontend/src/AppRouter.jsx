@@ -5,6 +5,7 @@ import Login from "./Pages/Dev/auth/Login";
 import Register from "./Pages/Dev/auth/Register";
 import Home from "./Pages/Dev/views/Home";
 import Profile from "./Pages/Dev/views/Profile";
+import Layout_user from "./Pages/Dev/views/Layout";
 
 function AppRouter() {
   return (
@@ -15,7 +16,7 @@ function AppRouter() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
           </Route>
-          <Route path="/dev" element={<Layout />}>
+          <Route path="/dev" element={<Layout_user />}>
             <Route path="home" element={<Home />} />
             <Route path="profile" element={<Profile />} />
             {/* <Route path="register" element={<Register />} /> */}

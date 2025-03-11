@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import React from "react";
 const Register = () => {
@@ -9,6 +10,7 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    employee_id: "",
   });
   const [error, setError] = useState("");
 
@@ -20,7 +22,7 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -45,38 +47,23 @@ const Register = () => {
       return;
     }
 
-    // Store user data in local storage
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    };
+    const response = await fetch("http://localhost:5000/dev/register", options);
 
-    // Check if email already exists
-    const emailExists = users.some((user) => user.email === formData.email);
-    if (emailExists) {
-      setError("Email already registered");
-      return;
+    const data = await response.json();
+    if (response.status !== 200) {
+      toast.error(data.msg);
+      console.log(data);
+    } else {
+      toast.success(data.msg);
+      navigate("/dev-auth/login");
     }
-
-    // Add new user
-    users.push({
-      id: Date.now(),
-      username: formData.username,
-      email: formData.email,
-      password: formData.password, // In a real app, you should hash this password
-    });
-
-    localStorage.setItem("users", JSON.stringify(users));
-
-    // Set current user
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify({
-        id: users[users.length - 1].id,
-        username: formData.username,
-        email: formData.email,
-      })
-    );
-
-    // Redirect to home page
-    navigate("/");
   };
 
   return (
@@ -120,6 +107,20 @@ const Register = () => {
                 id="email"
                 name="email"
                 value={formData.email}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="Employee" className="block text-gray-700 mb-2">
+                Employee ID
+              </label>
+              <input
+                type="text"
+                id="Employee"
+                name="employee_id"
+                value={formData.employee_id}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />

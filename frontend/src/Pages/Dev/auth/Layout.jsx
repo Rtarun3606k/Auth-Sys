@@ -6,7 +6,7 @@ import Footer from "../../../components/Footer";
 function Layout() {
   return (
     <div>
-      <Navbar />
+      <Navbar title="DEV CONSOLE" />
       <Outlet />
       <Footer />
     </div>

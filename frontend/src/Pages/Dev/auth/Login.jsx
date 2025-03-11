@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import React from "react";
 import { toast } from "react-toastify";
+import { setCookies } from "../../../utilities/Cookies";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -29,22 +30,26 @@ const Login = () => {
       setError("All fields are required");
       return;
     }
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    };
 
     // Check if user exists in local storage
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const user = users.find(
-      (user) =>
-        user.email === formData.email && user.password === formData.password
-    );
+    const response = await fetch("http://localhost:5000/dev/login", options);
 
-    if (!user) {
-      setError("Invalid email or password");
-      toast.success("Invalid email or password");
-      return;
+    const data = await response.json();
+    if (response.status !== 200) {
+      toast.error(data.msg);
+      console.log(data);
+    } else {
+      toast.success(data.msg);
+      setCookies("auth_token", data.token, 1);
+      navigate("/dev/home");
     }
-
-    // Redirect to home page
-    navigate("/");
   };
 
   return (

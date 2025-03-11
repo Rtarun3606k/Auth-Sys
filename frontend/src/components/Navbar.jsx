@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
 
-const Navbar = () => {
+const Navbar = (props) => {
   return (
     <nav className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,16 +14,26 @@ const Navbar = () => {
                 className="h-8 w-auto"
               />
               <span className="ml-3 text-[#2e3a6a] font-semibold text-lg">
-                Student Portal
+                {props.title}
               </span>
             </Link>
             <div className="ml-6">
-              <Link
+              {/* <Link
                 to="/dev/home"
                 className="text-[#2e3a6a] hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium"
               >
                 Home
-              </Link>
+              </Link> */}
+              {props?.tabs?.map((tab) => (
+                <>
+                  <Link
+                    to={tab.link}
+                    className="text-[#2e3a6a] hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    {tab.name}
+                  </Link>
+                </>
+              ))}
             </div>
           </div>
           <div className="flex items-center">
