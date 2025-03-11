@@ -9,7 +9,7 @@ function AppRouter() {
     <div>
       <Router>
         <Routes>
-          <Route path="/dev" element={<Layout />}>
+          <Route path="/dev-auth" element={<Layout />}>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
           </Route>

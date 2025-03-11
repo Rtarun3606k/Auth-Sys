@@ -28,13 +28,13 @@ const Navbar = () => {
           </div>
           <div className="flex items-center">
             <Link
-              to="/dev/login"
+              to="/dev-auth/login"
               className="text-[#2e3a6a] hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium"
             >
               Login
             </Link>
             <Link
-              to="/dev/register"
+              to="/dev-auth/register"
               className="text-[#2e3a6a] hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium"
             >
               Register
