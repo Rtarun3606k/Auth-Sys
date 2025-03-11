@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import React from "react";
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/Footer";
+import { toast } from "react-toastify";
+
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -39,18 +39,9 @@ const Login = () => {
 
     if (!user) {
       setError("Invalid email or password");
+      toast.success("Invalid email or password");
       return;
     }
-
-    // Set current user
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify({
-        id: user.id,
-        username: user.username,
-        email: user.email,
-      })
-    );
 
     // Redirect to home page
     navigate("/");
